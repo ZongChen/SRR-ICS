@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+
+.idea/
+
+data/
+logs/
+wandb/
+pretrained/
+
+*.pth
+*.pth.tar
+*.pt
+*.ckpt

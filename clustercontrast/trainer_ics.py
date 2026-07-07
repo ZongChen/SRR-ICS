@@ -2,7 +2,7 @@ from __future__ import print_function, absolute_import
 import copy
 import time
 import torch
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 from .losses.cam_based_adversarial_loss import arcAdversarialLoss
 from .losses.cosface_loss import ArcFaceLoss

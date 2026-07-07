@@ -1,5 +1,15 @@
-CUDA_VISIBLE_DEVICES=2,3 python train_clip.py --dataset 'market1501' --lossweight 0.6 --epsilon 0.8  --start_adv_epoch 40 \
---logs-dir '/data/CLIP-ICS-ReID/log/market1501'
+#!/usr/bin/env bash
+set -e
 
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train_clip.py --dataset 'msmt17' --lossweight 0.0 --epsilon 0.8  --start_adv_epoch 40 \
---logs-dir '/data/CLIP-ICS-ReID/log/msmt17'
+DATA_DIR=${DATA_DIR:-data}
+DATASET=${DATASET:-market1501}
+
+python train_clip_ics.py \
+  --dataset "${DATASET}" \
+  --distance ICS \
+  --K_search 60 \
+  --K_intra 25 \
+  --K_cross 15 \
+  --tau_intra 2.5 \
+  --beta 0.76 \
+  --data-dir "${DATA_DIR}"

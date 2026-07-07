@@ -63,7 +63,7 @@ def img_association_optimized(args, model, propagate_loader, id_count_each_cam, 
     print(f'[img_association] Pseudo label quality -> ARI: {ari_value:.4f}, NMI: {nmi_value:.4f}')
 
     if args.wandb_enabled:
-        import wandb
+        from clustercontrast.utils import optional_wandb as wandb
         wandb.log({'ARI': ari_value, 'NMI': nmi_value})
 
     return updated_label, get_features, global_labels, cam_ID, intra_cam_pID, global_labels, new_gt_IDs

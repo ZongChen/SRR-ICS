@@ -13,7 +13,7 @@ from scipy.sparse.csgraph import connected_components
 from collections import Counter
 from collections import defaultdict
 
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 import warnings
 import time
 import math

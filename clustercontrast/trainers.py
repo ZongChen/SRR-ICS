@@ -2,7 +2,7 @@ from __future__ import print_function, absolute_import
 import copy
 import time
 import torch
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 from .losses.cam_based_adversarial_loss import arcAdversarialLoss
 from .losses.cosface_loss import ArcFaceLoss
@@ -335,5 +335,4 @@ class TrainerFp16(object):
         converted_label = torch.tensor(self.new_labels[global_label]).long()  # predicted label
 
         return imgs.cuda(), converted_label, cams.cuda(), cam_pid.cuda(), global_label.cuda()
-
 

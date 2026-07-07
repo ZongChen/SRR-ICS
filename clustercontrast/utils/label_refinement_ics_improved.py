@@ -4,7 +4,7 @@ import time
 import math
 from typing import Optional, Union, Any
 import torch.nn.functional as F
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 
 def v2jaccard_numpy_chunked(V, chunk_size=512):
@@ -246,5 +246,4 @@ def compute_ics_jaccard_distance(features: torch.Tensor,
     t1 = time.time()
     print(f"GPU ICS-CKRNN Jaccard finished in {t1 - t0:.3f}s (N={N})")
     return jaccard_dist
-
 

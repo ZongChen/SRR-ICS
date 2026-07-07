@@ -15,10 +15,8 @@ class regdb_rgb(BaseImageDataset):
 
     def __init__(self, root,trial=0, verbose=True, **kwargs):
         super(regdb_rgb, self).__init__()
-        # root='./data/'
         # print('regdb_rgb',trial)
-        dataset_dir = '/media/deep/Data/Share/Dataset/RegDB_Unsupervised/RegDB/rgb_modify/'
-        self.dataset_dir = dataset_dir
+        self.dataset_dir = osp.join(root, 'regdb/rgb_modify/')
         self.train_dir = osp.join(self.dataset_dir, str(trial)+'/'+'bounding_box_train')
 
 

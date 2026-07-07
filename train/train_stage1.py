@@ -7,7 +7,7 @@ import tqdm
 
 from clustercontrast.losses.supcon import SupConLoss
 from clustercontrast.utils.meters import AverageMeter
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 
 def do_train_text_stage1(args,
@@ -148,5 +148,5 @@ def do_train_text_stage1(args,
 
     all_end_time = time.monotonic()
     total_time = timedelta(seconds=all_end_time - all_start_time)
-    print('=> Task finished: {}'.format('CLIP-ICS-Stage1'))
+    print('=> Task finished: {}'.format('SRR-ICS-Stage1'))
     print("Stage1 running time: {}".format(total_time))

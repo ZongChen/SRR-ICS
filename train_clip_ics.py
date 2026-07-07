@@ -10,7 +10,7 @@ import os.path as osp
 import random
 import numpy as np
 import sys
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 from datetime import datetime
 
 sys.path.append(' ')
@@ -135,11 +135,11 @@ def main_worker(args):
 
     if args.wandb_enabled:
         if args.wandb_group:
-            wandb.init(project=f'CCAFL-ics-{args.dataset}',
+            wandb.init(project=f'SRR-ICS-{args.dataset}',
                        group=args.wandb_group,
                        dir=f'wandb/{args.dataset}')
         else:
-            wandb.init(project=f'CCAFL-ics-{args.dataset}',
+            wandb.init(project=f'SRR-ICS-{args.dataset}',
                        group="parameter_tuning",
                        dir=f'wandb/{args.dataset}')
 
@@ -158,11 +158,9 @@ def main_worker(args):
     # Create model
     model, _ = create_model(args)
 
-    resume_path = '/media/deep/Data/Share/1.Pytorch_Re-id_Cross_SSL/CCAFL/logs/train_ics/msmt17/model_best.pth.tar'
-    resume_path = ''
-    if resume_path != '':
-        print(f"==> Resuming from checkpoint...{resume_path}")
-        checkpoint = torch.load(resume_path, weights_only=False)
+    if args.resume:
+        print(f"==> Resuming from checkpoint...{args.resume}")
+        checkpoint = torch.load(args.resume, weights_only=False)
         model.load_state_dict(checkpoint['state_dict'])
 
 
@@ -237,12 +235,12 @@ if __name__ == '__main__':
     parser.add_argument("--wandb_index", type=int, default=0)
 
     # path
-    working_dir = '/media/deep/SSD/Dataset_ReID'
-    parser.add_argument('--data-dir', type=str, metavar='PATH', default=working_dir)
+    parser.add_argument('--data-dir', type=str, metavar='PATH', default='data')
     parser.add_argument('--logs-dir', type=str, metavar='PATH', default='logs/train_ics/')
+    parser.add_argument('--resume', type=str, metavar='PATH', default='', help='optional checkpoint to resume from')
 
     parser.add_argument('--market_path', type=str, default='Market-1501-v15.09.15/')
-    parser.add_argument('--duke_path', type=str, default='DukeMTMC-reID/DukeMTMC-reID')
+    parser.add_argument('--duke_path', type=str, default='DukeMTMC-reID')
     parser.add_argument('--msmt_path', type=str, default='MSMT17')
 
     # PK for Inter Stage

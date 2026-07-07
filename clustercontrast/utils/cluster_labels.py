@@ -8,7 +8,7 @@ from sklearn.cluster import SpectralClustering
 from sklearn import metrics
 import networkx as nx
 import os
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 import matplotlib.pyplot as plt
 from clustercontrast.evaluators import extract_vit_features
 

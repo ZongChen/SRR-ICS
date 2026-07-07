@@ -12,7 +12,7 @@ import numpy as np
 import scipy
 import sys
 import time
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 # sys.path.append(' ')
 import torch
@@ -540,10 +540,11 @@ def main_worker(args):
 
     model = create_model(args)  # Create model
 
-    # Load trained stage1 model
-    # model_path = osp.join('logs/train_curriculum_ema', 'CCAFL_intra30_model_stage2_epoch29.pth.tar')
-    model_path = '/media/deep/Data/Share/1.Pytorch_Re-id_Cross_SSL/CCAFL/logs/train_ics/market1501/sota.pth.tar'
-    checkpoint = torch.load(model_path, weights_only=False)
+    if not args.resume:
+        raise ValueError("Please provide a trained checkpoint with --resume.")
+
+    print(f"==> Loading checkpoint...{args.resume}")
+    checkpoint = torch.load(args.resume, weights_only=False)
     model.load_state_dict(checkpoint['state_dict'])
     # print('载入模型训练准确度为 ', checkpoint['R1'])
 
@@ -596,13 +597,13 @@ if __name__ == '__main__':
     parser.add_argument("--wandb_enabled", default=False, type=bool)
 
     # path
-    working_dir = '/media/deep/SSD/Dataset_ReID'
-    parser.add_argument('--data-dir', type=str, metavar='PATH', default=working_dir)
+    parser.add_argument('--data-dir', type=str, metavar='PATH', default='data')
     parser.add_argument('--logs-dir', type=str, metavar='PATH', default='logs/')
+    parser.add_argument('--resume', type=str, metavar='PATH', default='', help='trained checkpoint for evaluation')
 
-    parser.add_argument('--market_path', type=str, default='/media/deep/SSD/Dataset_ReID/Market-1501-v15.09.15/')
-    parser.add_argument('--duke_path', type=str, default='/media/deep/SSD/Dataset_ReID/DukeMTMC-reID/DukeMTMC-reID')
-    parser.add_argument('--msmt_path', type=str, default='/media/deep/SSD/Dataset_ReID/MSMT17')
+    parser.add_argument('--market_path', type=str, default='Market-1501-v15.09.15/')
+    parser.add_argument('--duke_path', type=str, default='DukeMTMC-reID')
+    parser.add_argument('--msmt_path', type=str, default='MSMT17')
 
     # Loader 设置
     parser.add_argument('--class_per_batch', type=int, default=16)  # triplet sampling, number of IDs per batch16

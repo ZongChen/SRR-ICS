@@ -21,12 +21,11 @@ class llcm_ir(BaseImageDataset):
 
     def __init__(self, root, verbose=True, **kwargs):
         super(llcm_ir, self).__init__()
-        root='/media/deep/SSD/Dataset_ReID_VI/LLCM/'
         self.dataset_dir = osp.join(root, self.dataset_dir)
 
         self.train_dir = osp.join(self.dataset_dir, 'bounding_box_train')
 
-        self.query_dir = osp.join(self.dataset_dir, 'query')  # osp.join(self.dataset_dir, 'query') '/dat01/yangbin/data/sysu/all_modify/'
+        self.query_dir = osp.join(self.dataset_dir, 'query')
         self.gallery_dir = osp.join(self.dataset_dir, 'bounding_box_test')
 
 

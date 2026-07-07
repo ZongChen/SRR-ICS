@@ -39,7 +39,7 @@ class Loaders:
 
         if colorjitter:
             brightness = 0.2
-            contrast = 0.15 if args.dataset  == 'MSMT17' else 0
+            contrast = 0.15 if args.dataset == 'msmt17' else 0
 
             self.aug_transform = T.Compose([
                 T.Resize((height, width), interpolation=InterpolationMode.BICUBIC),
@@ -185,8 +185,10 @@ class Loaders:
         # 关键步骤
         if train_dataset == 'market_train':
             reid_samples = Samples4Market(train_samples_path, save_semi_gt_ID=True)  # PersonReIDSamples
-        elif train_dataset == 'duke_train' or 'msmt_train':  # Duke and MSMT have similar name style, so Duke data loader can be used for MSMT
+        elif train_dataset in ('duke_train', 'msmt_train'):  # Duke and MSMT have similar name style, so Duke data loader can be used for MSMT
             reid_samples = Samples4Duke(train_samples_path, save_semi_gt_ID=True)
+        else:
+            raise ValueError(f'Unknown training dataset: {train_dataset}')
 
         samples = reid_samples.samples
         id_count_each_cam = reid_samples.id_count_each_cam
@@ -204,9 +206,11 @@ class Loaders:
         if test_dataset == 'market_test':
             query_samples = Samples4Market(query_data_path, reorder=False).samples  #, get_semi_label=False
             gallery_samples = Samples4Market(gallery_data_path, reorder=False).samples  # without re-order, cams=1,2,3,4,5,6
-        elif test_dataset == 'duke_test' or 'msmt_test':
+        elif test_dataset in ('duke_test', 'msmt_test'):
             query_samples = Samples4Duke(query_data_path, reorder=False).samples
             gallery_samples = Samples4Duke(gallery_data_path, reorder=False).samples
+        else:
+            raise ValueError(f'Unknown test dataset: {test_dataset}')
 
         return query_samples, gallery_samples
 
@@ -270,4 +274,3 @@ class Loaders:
             camera_dict[camera_id].append(sample)
 
         return camera_dict
-

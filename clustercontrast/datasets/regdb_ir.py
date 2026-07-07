@@ -16,9 +16,7 @@ class regdb_ir(BaseImageDataset):
     def __init__(self, root, trial= 0,verbose=True, **kwargs):
         super(regdb_ir, self).__init__()
         # print('regdb_ir',trial)
-        # root='./data/'
-        dataset_dir = '/media/deep/Data/Share/Dataset/RegDB_Unsupervised/RegDB/ir_modify/'
-        self.dataset_dir = dataset_dir
+        self.dataset_dir = osp.join(root, self.dataset_dir)
         self.train_dir = osp.join(self.dataset_dir, str(trial)+'/'+'bounding_box_train')
 
         self.query_dir = osp.join(self.dataset_dir, str(trial)+'/'+'query') 

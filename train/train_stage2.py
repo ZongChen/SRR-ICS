@@ -24,7 +24,7 @@ from clustercontrast.utils.label_refinement_ics import compute_ics_ckrnn_jaccard
 
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import adjusted_rand_score
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 
 def cams_offset(features, cams):
@@ -371,6 +371,5 @@ def do_train_intra_inter_stage(args,
     dtime = timedelta(seconds=end_time - start_time)
     print('=> Task finished: {}'.format('CLIP_Stage2_ICS'))
     print('Stage2 running time: {}'.format(dtime))
-
 
 

@@ -23,10 +23,7 @@ from clustercontrast.utils.serialization import load_checkpoint, save_checkpoint
 from clustercontrast.utils.cluster_labels import img_association
 from clustercontrast.utils.faiss_rerank import compute_jaccard_distance, compute_CAJ_jaccard_distance
 from clustercontrast.evaluators import extract_vit_features, extract_vit_features_for_isc
-from clustercontrast.utils.label_refinement_ics import compute_ics_ckrnn_jaccard_distance
 from clustercontrast.utils.label_refinement_ics_improved import compute_ics_jaccard_distance
-from clustercontrast.utils.label_refinement_ics_simplified import compute_ics_ckrnn_jaccard_distance_simplified
-from clustercontrast.utils.label_refinement_ics_memory_efficient import compute_ics_ckrnn_jaccard_optimized
 from clustercontrast.utils.data.sampler import RandomMultipleGallerySampler
 from clustercontrast.utils.data import IterLoader
 from clustercontrast.utils.data.preprocessor import Preprocessor
@@ -34,7 +31,7 @@ from clustercontrast.utils.data import transforms as T
 
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import adjusted_rand_score
-import wandb
+from clustercontrast.utils import optional_wandb as wandb
 
 
 def cams_offset(features, cams):
@@ -337,6 +334,5 @@ def ics_intra_inter_stage(args,
     dtime = timedelta(seconds=end_time - start_time)
     print('=> Task finished: {}'.format('CLIP_Stage2_ICS'))
     print('Stage2 running time: {}'.format(dtime))
-
 
 

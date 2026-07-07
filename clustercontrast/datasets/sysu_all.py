@@ -20,7 +20,6 @@ class sysu_all(BaseImageDataset):
 
     def __init__(self, root, verbose=True, **kwargs):
         super(sysu_all, self).__init__()
-        root='/dat01/yangbin/data/'
         self.dataset_dir = osp.join(root, self.dataset_dir)
         self.train_dir = osp.join(self.dataset_dir, 'bounding_box_train')
         self.query_dir = osp.join(self.dataset_dir, 'query')

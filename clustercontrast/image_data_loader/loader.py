@@ -22,7 +22,7 @@ class ClassUniformlySampler(data.sampler.Sampler):
         self.k = k
 
         self.samples = self.data_source.samples
-        #print("sample",self.samples)#['/data/tx/Market1501/bounding_box_train/0002_c1s1_000451_03.jpg', 0, 0, -1, 0, 0, 2016]]
+        # print("sample", self.samples)
 
         self.class_dict = self._tuple2dict(self.samples)
 
@@ -93,5 +93,4 @@ class IterLoader:
         except:
             self.iter = iter(self.loader)
             return next(self.iter)
-
 
